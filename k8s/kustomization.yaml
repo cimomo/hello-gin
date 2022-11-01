@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- hello-gin-oam.yaml
+- argoproj.application.yaml
+images:
+- name: hello-gin
+  newName: 35.92.92.57:32751/demo/hello-gin
+  newTag: main-9cf7128f-deliveryrun
+patches:
+- path: oam_patch.json
+  target:
+    group: core.oam.dev
+    kind: Application
+    name: hello-gin-oam
+    version: v1beta1

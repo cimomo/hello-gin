@@ -1,0 +1,31 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: hello-gin-oam
+  annotations:
+    cpaas.io/creator: admin@cpaas.io
+    cpaas.io/updated-at: 2022-10-29T04:25:45Z
+    oam.dev/kubevela-version: v3.10.0
+spec:
+  components:
+    - name: hello-gin-webservice
+      properties:
+        env: []
+        image: 35.92.92.57:32751/demo/hello-gin:latest
+        ports:
+          - port: 3000
+            protocol: tcp
+            type: external
+        volumes: []
+      traits:
+        - properties:
+            action: start
+            replicas: 1
+          type: scaler
+        - properties:
+            domain: gin.local
+            http:
+              /: 3000
+            type: http
+          type: ingress
+      type: webservice
